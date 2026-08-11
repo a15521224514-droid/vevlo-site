@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-app-store-url="">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -151,9 +151,8 @@
         <h1>Turn your media into a file you can use.</h1>
         <p class="lede">Vevlo helps you turn English video and audio into editable text, SRT, and VTT files—right on your iPhone.</p>
         <p class="trust-line">No account. No media upload to Vevlo servers. No subscription required to get started.</p>
-        <div class="download-block" aria-live="polite">
-          <a class="button" id="app-store-link" hidden>Download on the App Store</a>
-          <span class="coming-soon" id="app-store-status">App Store listing coming soon.</span>
+        <div class="download-block">
+          <span class="coming-soon">App Store listing coming soon.</span>
         </div>
       </div>
       <div class="device-card" aria-label="Illustration of the Vevlo import screen">
@@ -232,18 +231,5 @@
     </div>
   </footer>
 
-  <script>
-    const appStoreURL = document.documentElement.dataset.appStoreUrl.trim();
-    const appStoreLink = document.getElementById("app-store-link");
-    const appStoreStatus = document.getElementById("app-store-status");
-
-    const hasValidAppStoreURL = /^https:\/\/apps\.apple\.com\//.test(appStoreURL);
-
-    if (hasValidAppStoreURL) {
-      appStoreLink.href = appStoreURL;
-      appStoreLink.hidden = false;
-      appStoreStatus.hidden = true;
-    }
-  </script>
 </body>
 </html>
