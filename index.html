@@ -152,7 +152,7 @@
         <p class="lede">Vevlo helps you turn English video and audio into editable text, SRT, and VTT files—right on your iPhone.</p>
         <p class="trust-line">No account. No media upload to Vevlo servers. No subscription required to get started.</p>
         <div class="download-block" aria-live="polite">
-          <a class="button" id="app-store-link" href="#" hidden>Download on the App Store</a>
+          <a class="button" id="app-store-link" hidden>Download on the App Store</a>
           <span class="coming-soon" id="app-store-status">App Store listing coming soon.</span>
         </div>
       </div>
@@ -237,7 +237,9 @@
     const appStoreLink = document.getElementById("app-store-link");
     const appStoreStatus = document.getElementById("app-store-status");
 
-    if (appStoreURL) {
+    const hasValidAppStoreURL = /^https:\/\/apps\.apple\.com\//.test(appStoreURL);
+
+    if (hasValidAppStoreURL) {
       appStoreLink.href = appStoreURL;
       appStoreLink.hidden = false;
       appStoreStatus.hidden = true;
