@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" data-app-store-url="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vevlo turns English video and audio into editable text, SRT, and VTT files on your iPhone.">
+  <title>Vevlo — Video and Audio to Text</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --ink: #172033;
+      --muted: #63708a;
+      --line: #dce3ef;
+      --canvas: #f6f8fc;
+      --surface: #ffffff;
+      --accent: #3366e8;
+      --accent-deep: #244eb9;
+      --accent-soft: #eaf0ff;
+      --radius: 22px;
+      --shadow: 0 18px 50px rgba(24, 44, 86, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 76px;
+    }
+    .brand { color: var(--ink); font-size: 1.25rem; font-weight: 760; letter-spacing: -0.035em; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 0.94rem; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--accent); }
+    .eyebrow { color: var(--accent); font-size: 0.82rem; font-weight: 750; letter-spacing: 0.11em; text-transform: uppercase; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr); gap: 60px; align-items: center; padding: 74px 0 90px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 700px; margin-bottom: 22px; font-size: clamp(2.7rem, 6vw, 5.25rem); letter-spacing: -0.066em; line-height: 0.98; }
+    .lede { max-width: 620px; margin-bottom: 28px; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.27rem); }
+    .trust-line { color: var(--muted); font-size: 0.94rem; }
+    .download-block { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 19px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .button:hover, .button:focus-visible { background: var(--accent-deep); }
+    .coming-soon { color: var(--muted); font-size: 0.94rem; }
+    .device-card {
+      min-height: 470px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 34px;
+      background: linear-gradient(145deg, #dce7ff, #f7faff 54%, #d7f0eb);
+      box-shadow: var(--shadow);
+    }
+    .phone {
+      display: flex;
+      min-height: 426px;
+      padding: 25px;
+      border: 8px solid #172033;
+      border-radius: 38px;
+      background: #fbfcff;
+      box-shadow: 0 12px 30px rgba(21, 34, 62, 0.22);
+    }
+    .mock-screen { display: flex; width: 100%; flex-direction: column; }
+    .mock-top { display: flex; justify-content: space-between; color: #172033; font-size: 0.78rem; font-weight: 700; }
+    .mock-title { margin: 36px 0 20px; color: #172033; font-size: 1.65rem; font-weight: 750; letter-spacing: -0.045em; }
+    .mock-button { padding: 15px; border-radius: 14px; background: #3366e8; color: #fff; font-weight: 700; text-align: center; }
+    .mock-secondary { margin-top: 12px; padding: 13px; border: 1px solid #d6deed; border-radius: 14px; color: #32425f; font-weight: 650; text-align: center; }
+    .mock-project { margin-top: auto; padding: 15px; border-radius: 16px; background: #eef3ff; color: #32425f; }
+    .mock-project strong { display: block; margin-bottom: 3px; color: #172033; font-size: 0.94rem; }
+    .section { padding: 82px 0; }
+    .section.white { background: var(--surface); }
+    .section-heading { max-width: 650px; margin-bottom: 38px; }
+    h2 { margin-bottom: 12px; font-size: clamp(1.9rem, 3.8vw, 3rem); letter-spacing: -0.05em; line-height: 1.07; }
+    .section-heading p { color: var(--muted); font-size: 1.05rem; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { min-height: 198px; padding: 25px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .card-number { display: grid; width: 31px; height: 31px; place-items: center; margin-bottom: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 0.84rem; font-weight: 760; }
+    h3 { margin-bottom: 8px; font-size: 1.08rem; letter-spacing: -0.025em; }
+    .card p, .format-note { color: var(--muted); font-size: 0.96rem; }
+    .workflow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .step { min-height: 154px; padding: 25px; border-right: 1px solid var(--line); }
+    .step:last-child { border-right: 0; }
+    .step span { display: block; margin-bottom: 20px; color: var(--accent); font-size: 0.82rem; font-weight: 760; }
+    .step strong { display: block; font-size: 1.09rem; }
+    .format-note { margin-top: 20px; }
+    .promise { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 36px; border-radius: var(--radius); background: #172033; color: #fff; }
+    .promise p { margin: 0; color: #cbd5e8; }
+    .promise h2 { margin-bottom: 0; }
+    footer { padding: 30px 0 44px; color: var(--muted); font-size: 0.88rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 18px; border-top: 1px solid var(--line); padding-top: 26px; }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { color: var(--muted); }
+    .footer-links a:hover, .footer-links a:focus-visible { color: var(--accent); }
+    @media (max-width: 760px) {
+      .nav { min-height: 64px; }
+      .hero { grid-template-columns: 1fr; gap: 35px; padding: 48px 0 62px; }
+      .device-card { min-height: 390px; }
+      .phone { min-height: 348px; }
+      .grid, .promise { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr 1fr; }
+      .step:nth-child(2) { border-right: 0; }
+      .step:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .shell { width: min(100% - 28px, 1120px); }
+      .nav-links { gap: 12px; font-size: 0.86rem; }
+      .workflow { grid-template-columns: 1fr; }
+      .step, .step:nth-child(2) { border-right: 0; border-bottom: 1px solid var(--line); }
+      .step:last-child { border-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Vevlo home">Vevlo</a>
+      <div class="nav-links">
+        <a href="#how-it-works">How it works</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="shell hero">
+      <div>
+        <p class="eyebrow">Video &amp; audio to text</p>
+        <h1>Turn your media into a file you can use.</h1>
+        <p class="lede">Vevlo helps you turn English video and audio into editable text, SRT, and VTT files—right on your iPhone.</p>
+        <p class="trust-line">No account. No media upload to Vevlo servers. No subscription required to get started.</p>
+        <div class="download-block" aria-live="polite">
+          <a class="button" id="app-store-link" href="#" hidden>Download on the App Store</a>
+          <span class="coming-soon" id="app-store-status">App Store listing coming soon.</span>
+        </div>
+      </div>
+      <div class="device-card" aria-label="Illustration of the Vevlo import screen">
+        <div class="phone">
+          <div class="mock-screen">
+            <div class="mock-top"><span>Vevlo</span><span>•••</span></div>
+            <div class="mock-title">Turn Video<br>Into Text</div>
+            <div class="mock-button">Select Video from Photos</div>
+            <div class="mock-secondary">Import Audio or File</div>
+            <div class="mock-project"><strong>Private by design</strong>Review text, then export a real subtitle file.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white" id="how-it-works">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">A focused workflow</p>
+          <h2>From a clip to a clean handoff.</h2>
+          <p>Vevlo is built for one job: helping you create editable text and standard subtitle files from media you already have.</p>
+        </div>
+        <div class="workflow" aria-label="Vevlo workflow">
+          <div class="step"><span>01</span><strong>Import</strong><p class="format-note">Choose a video from Photos or import a file.</p></div>
+          <div class="step"><span>02</span><strong>Transcribe</strong><p class="format-note">Create timed English text on your device where supported.</p></div>
+          <div class="step"><span>03</span><strong>Review</strong><p class="format-note">Edit each cue and jump to its place in the media.</p></div>
+          <div class="step"><span>04</span><strong>Export</strong><p class="format-note">Share TXT, SRT, or VTT with the next app or person.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">Made for delivery</p>
+          <h2>Less workspace. More finished files.</h2>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="card-number">01</div>
+            <h3>Review timed text</h3>
+            <p>Correct the words before you send anything. Tap a cue time to review that moment in your media.</p>
+          </article>
+          <article class="card">
+            <div class="card-number">02</div>
+            <h3>Export standard formats</h3>
+            <p>Create UTF-8 TXT, numbered SRT, or WebVTT files that fit into the rest of your workflow.</p>
+          </article>
+          <article class="card">
+            <div class="card-number">03</div>
+            <h3>Keep projects local</h3>
+            <p>Your imported media and transcript projects stay in Vevlo’s local device storage until you delete them.</p>
+          </article>
+        </div>
+        <p class="format-note">V1 supports MP4, MOV, MP3, M4A, and WAV. English transcription only. Review your text before publishing—recognition quality depends on the recording.</p>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="shell">
+        <div class="promise">
+          <h2>Private by design.<br>Simple by default.</h2>
+          <p>Vevlo does not require an account. It does not upload your media files to Vevlo servers for transcription, and it does not include advertising, tracking, or analytics SDKs.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <div class="footer-row">
+      <span>© 2026 Vevlo</span>
+      <div class="footer-links">
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const appStoreURL = document.documentElement.dataset.appStoreUrl.trim();
+    const appStoreLink = document.getElementById("app-store-link");
+    const appStoreStatus = document.getElementById("app-store-status");
+
+    if (appStoreURL) {
+      appStoreLink.href = appStoreURL;
+      appStoreLink.hidden = false;
+      appStoreStatus.hidden = true;
+    }
+  </script>
+</body>
+</html>
